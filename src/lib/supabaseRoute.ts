@@ -17,7 +17,9 @@ export function createRouteHandlerClient(request: NextRequest, response?: NextRe
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       get(name: string) {
-        return request.cookies.get(name)?.value
+        const value = request.cookies.get(name)?.value
+        console.log(`🍪 Getting cookie ${name}:`, value ? 'found' : 'missing')
+        return value
       },
       set(name: string, value: string, options: any) {
         request.cookies.set({

@@ -60,26 +60,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string, inviteToken?: string) => {
     try {
+      console.log('🔄 Starting signup process...', { email, hasInviteToken: !!inviteToken })
+
+      // Test Supabase client availability first
+      if (!supabase) {
+        console.error('❌ Supabase client not available')
+        return { error: new Error('Authentication service unavailable') }
+      }
+
+      console.log('✅ Supabase client available, attempting signup...')
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password
         // No email confirmation options since it's disabled
       })
 
+      console.log('📝 Signup response:', {
+        hasData: !!data,
+        hasUser: !!data?.user,
+        userId: data?.user?.id,
+        hasError: !!error,
+        errorMessage: error?.message,
+        errorDetails: error
+      })
+
       if (error) {
-        console.error('Signup error:', error)
+        console.error('❌ Signup error:', error)
         return { error }
       }
 
       // Store invite token for handling after authentication
       if (inviteToken && data.user) {
-        // We'll pass this via the signup page redirect
+        console.log('🎟️ Returning with invite token for processing')
         return { error: null, inviteToken }
       }
 
+      console.log('✅ Signup successful!')
       return { error: null }
     } catch (error) {
-      console.error('Signup error:', error)
+      console.error('💥 Signup network/fetch error:', error)
+      console.error('Error type:', typeof error)
+      console.error('Error name:', error instanceof Error ? error.name : 'Unknown')
+      console.error('Error message:', error instanceof Error ? error.message : String(error))
+      console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
       return { error }
     }
   }

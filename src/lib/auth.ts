@@ -17,16 +17,25 @@ export interface User {
 export async function getUser(request?: NextRequest): Promise<User> {
   const supabase = request ? createRouteHandlerClient(request) : supabaseServer
 
+  // Debug request cookies
+  if (request) {
+    console.log('🍪 Request cookies:', request.cookies.getAll().map(c => ({ name: c.name, hasValue: !!c.value })))
+  }
+
   // Get the authenticated user
   const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-  // Minimal debug logging
-  if (authError && authError.message !== 'Auth session missing!') {
-    console.log('Auth debug:', { authError: authError?.message, hasUser: !!user })
-  }
+  // Enhanced debug logging
+  console.log('🔐 Auth check:', {
+    hasUser: !!user,
+    userId: user?.id?.substring(0, 8) + '...',
+    userEmail: user?.email,
+    authError: authError?.message,
+    usingRequest: !!request
+  })
 
   if (authError || !user) {
-    console.error('Authentication failed:', authError)
+    console.error('❌ Authentication failed:', authError)
     throw new Error('Not authenticated')
   }
 
