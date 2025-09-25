@@ -90,7 +90,7 @@ export default function CompletionPage() {
           </h1>
 
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Congratulations! You've both shared positive qualities about each other. This is a meaningful step toward building stronger co-parenting communication.
+            Congratulations! You&apos;ve both shared positive qualities about each other. This is a meaningful step toward building stronger co-parenting communication.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export default function CompletionPage() {
                       </span>
                     </div>
                     <p className="text-slate-800 leading-relaxed">
-                      "{quality.text}"
+                      &quot;{quality.text}&quot;
                     </p>
                   </div>
                 </div>
@@ -135,7 +135,7 @@ export default function CompletionPage() {
                 Ready for the next step?
               </h3>
               <p className="text-slate-600 mb-6">
-                Now that you've shared positive qualities, you might want to identify one area to work on together.
+                Now that you&apos;ve shared positive qualities, you might want to identify one area to work on together.
               </p>
               <Button
                 variant="secondary"
@@ -151,7 +151,7 @@ export default function CompletionPage() {
           ) : (
             <Card>
               <h3 className="font-semibold text-slate-900 mb-4">
-                What's one area you'd both like to work on?
+                What&apos;s one area you&apos;d both like to work on?
               </h3>
               <Textarea
                 value={conflictText}

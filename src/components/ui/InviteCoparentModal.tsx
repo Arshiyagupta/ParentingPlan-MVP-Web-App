@@ -110,7 +110,7 @@ export default function InviteCoparentModal({
         {/* Preview card */}
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">
-            We'll include your approved message:
+            We&apos;ll include your approved message:
           </label>
           <Card className="bg-slate-50">
             <div className="flex items-start space-x-3">
@@ -119,7 +119,7 @@ export default function InviteCoparentModal({
               </div>
               <div className="flex-1">
                 <p className="text-sm text-slate-800 italic">
-                  "{approvedMessage}"
+                  &quot;{approvedMessage}&quot;
                 </p>
               </div>
             </div>

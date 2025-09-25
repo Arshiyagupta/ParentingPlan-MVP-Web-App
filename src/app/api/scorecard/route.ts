@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       },
       coParent: coParentData ? {
         role: coParentData.role,
-        email: coParentData.profiles?.email,
+        email: (coParentData.profiles as any)?.email,
         connected: true
       } : {
         connected: false

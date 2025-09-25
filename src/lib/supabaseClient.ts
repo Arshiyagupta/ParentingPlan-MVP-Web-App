@@ -14,7 +14,7 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
       const cookies = document.cookie
         .split(';')
         .map(c => c.trim().split('='))
-        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {} as Record<string, string>)
       return cookies[name]
     },
     set(name: string, value: string, options: any = {}) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AppShell from '@/components/layout/AppShell'
 import ProtectedRoute from '@/components/auth/ProtectedRoute'
@@ -14,7 +14,7 @@ import { useToast } from '@/context/ToastContext'
 import { useAuth } from '@/context/AuthContext'
 import { ScoreboardData, SlotState } from '@/types'
 
-export default function DashboardPage() {
+function DashboardPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [scoreboardData, setScoreboardData] = useState<ScoreboardData | null>(null)
@@ -137,7 +137,7 @@ export default function DashboardPage() {
     }, 5000)
 
     return () => clearInterval(pollInterval)
-  }, [user, authLoading, showSuccess])
+  }, [user, authLoading, showSuccess]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleOpenSlot = (round: number) => {
     router.push(`/slot/${round}`)
@@ -324,7 +324,7 @@ export default function DashboardPage() {
 
         {/* Microcopy */}
         <p className="text-slate-600 mb-8 text-center">
-          We'll go one at a time. Each message is polished with AI before it's shared.
+          We&apos;ll go one at a time. Each message is polished with AI before it&apos;s shared.
         </p>
 
         {/* Main content - Full width slot cards */}
@@ -353,5 +353,17 @@ export default function DashboardPage() {
       />
     </AppShell>
     </ProtectedRoute>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-pulse text-slate-600">Loading...</div>
+      </div>
+    </div>}>
+      <DashboardPageContent />
+    </Suspense>
   )
 }

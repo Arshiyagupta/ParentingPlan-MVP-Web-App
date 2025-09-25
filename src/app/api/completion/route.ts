@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
       .from('qualities')
       .select('*')
       .eq('pair_id', pair.id)
-      .eq('approved_text', 'IS NOT', null)
+      .not('approved_text', 'is', null)
       .order('round_number', { ascending: true })
       .order('author_role', { ascending: true })
 
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       round: quality.round_number,
       author: quality.author_role,
       text: quality.approved_text,
-      authorEmail: members?.find(m => m.role === quality.author_role)?.profiles?.email || 'Unknown'
+      authorEmail: (members?.find(m => m.role === quality.author_role)?.profiles as any)?.email || 'Unknown'
     }))
 
     // Log completion event (optional)
@@ -88,8 +88,8 @@ export async function GET(request: NextRequest) {
       },
       statements,
       members: {
-        A: members?.find(m => m.role === 'A')?.profiles?.email || 'Unknown',
-        B: members?.find(m => m.role === 'B')?.profiles?.email || 'Unknown'
+        A: (members?.find(m => m.role === 'A')?.profiles as any)?.email || 'Unknown',
+        B: (members?.find(m => m.role === 'B')?.profiles as any)?.email || 'Unknown'
       }
     })
 

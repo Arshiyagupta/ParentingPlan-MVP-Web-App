@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { useAuth } from '@/context/AuthContext'
 
-export default function ConfirmPage() {
+function ConfirmPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuth()
@@ -100,7 +100,7 @@ export default function ConfirmPage() {
               </h1>
 
               <p className="text-slate-600 mb-6">
-                Your account has been successfully verified. You're ready to start using SafeTalk.
+                Your account has been successfully verified. You&apos;re ready to start using SafeTalk.
               </p>
 
               <Button
@@ -154,5 +154,17 @@ export default function ConfirmPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-pulse text-slate-600">Loading...</div>
+      </div>
+    </div>}>
+      <ConfirmPageContent />
+    </Suspense>
   )
 }

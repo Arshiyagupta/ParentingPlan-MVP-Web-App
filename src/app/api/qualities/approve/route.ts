@@ -89,9 +89,9 @@ export async function POST(request: NextRequest) {
           .eq('role', updatedPair.current_turn)
           .single()
 
-        if (nextUser?.profiles?.email) {
+        if ((nextUser?.profiles as any)?.email) {
           await sendTurnEmail({
-            recipientEmail: nextUser.profiles.email,
+            recipientEmail: (nextUser?.profiles as any)?.email,
             roundNumber: updatedPair.current_round,
             appreciationMessage: cleanText
           })

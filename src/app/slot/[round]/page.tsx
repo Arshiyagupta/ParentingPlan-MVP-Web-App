@@ -201,7 +201,7 @@ export default function SlotPage() {
             <span className="text-sm text-slate-500">Your turn</span>
           </div>
           <p className="text-sm text-slate-600">
-            Draft the good quality. We'll help you phrase it so it lands well.
+            Draft the good quality. We&apos;ll help you phrase it so it lands well.
           </p>
         </div>
 
@@ -259,7 +259,7 @@ export default function SlotPage() {
                       </svg>
                       <div>
                         <p className="text-sm font-medium text-amber-800">
-                          Let's rephrase so it's easier to receive
+                          Let&apos;s rephrase so it&apos;s easier to receive
                         </p>
                         <p className="text-sm text-amber-700">
                           Try focusing on the positive behavior or impact.
@@ -321,7 +321,7 @@ export default function SlotPage() {
               <div className="space-y-3 text-sm text-slate-600">
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-safetalk-green mt-2 flex-shrink-0"></div>
-                  <p>We'll guide tone away from blame</p>
+                  <p>We&apos;ll guide tone away from blame</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-safetalk-green mt-2 flex-shrink-0"></div>

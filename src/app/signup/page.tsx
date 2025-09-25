@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Card from '@/components/ui/Card'
@@ -8,7 +8,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useAuth } from '@/context/AuthContext'
 
-export default function SignupPage() {
+function SignupPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const inviteToken = searchParams.get('invite')
@@ -88,7 +88,7 @@ export default function SignupPage() {
         {inviteToken && (
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
             <p className="text-sm text-blue-800">
-              You've been invited to join SafeTalk! Create your account to get started.
+              You&apos;ve been invited to join SafeTalk! Create your account to get started.
             </p>
           </div>
         )}
@@ -108,7 +108,7 @@ export default function SignupPage() {
               </h1>
 
               <p className="text-slate-600 mb-6">
-                We've sent a confirmation link to <strong>{formData.email}</strong>
+                We&apos;ve sent a confirmation link to <strong>{formData.email}</strong>
               </p>
 
               <p className="text-sm text-slate-500 mb-6">
@@ -126,7 +126,7 @@ export default function SignupPage() {
                 </Button>
 
                 <p className="text-xs text-slate-500">
-                  Didn't receive the email? Check your spam folder or try signing up again.
+                  Didn&apos;t receive the email? Check your spam folder or try signing up again.
                 </p>
               </div>
             </div>
@@ -211,5 +211,17 @@ export default function SignupPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-pulse text-slate-600">Loading...</div>
+      </div>
+    </div>}>
+      <SignupPageContent />
+    </Suspense>
   )
 }

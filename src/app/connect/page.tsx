@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 
-export default function ConnectPage() {
+function ConnectPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const inviteToken = searchParams.get('invite')
@@ -15,7 +15,7 @@ export default function ConnectPage() {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleAutoConnect = async () => {
+  const handleAutoConnect = useCallback(async () => {
     if (!inviteToken) return
 
     setIsSubmitting(true)
@@ -44,14 +44,14 @@ export default function ConnectPage() {
       setError(errorMessage + ' Please try again.')
       setIsSubmitting(false)
     }
-  }
+  }, [inviteToken, router])
 
   // Auto-connect if accessed from invite link
   useEffect(() => {
     if (inviteToken) {
       handleAutoConnect()
     }
-  }, [inviteToken])
+  }, [inviteToken, handleAutoConnect])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -149,7 +149,7 @@ export default function ConnectPage() {
               pattern="[A-Z0-9]+"
               required
               autoFocus={!inviteToken}
-              disabled={inviteToken && isSubmitting}
+              disabled={!!(inviteToken && isSubmitting)}
             />
 
             {error && (
@@ -164,7 +164,7 @@ export default function ConnectPage() {
               size="md"
               loading={isSubmitting}
               className="w-full"
-              disabled={inviteToken && isSubmitting}
+              disabled={!!(inviteToken && isSubmitting)}
             >
               Connect
             </Button>
@@ -179,7 +179,7 @@ export default function ConnectPage() {
           {!inviteToken && (
             <div className="mt-4 text-center">
               <p className="text-sm text-slate-600">
-                Don't have a code?{' '}
+                Don&apos;t have a code?{' '}
                 <button className="font-semibold text-safetalk-green hover:text-safetalk-green-hover">
                   Ask your co-parent to send you an invite
                 </button>
@@ -189,5 +189,17 @@ export default function ConnectPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function ConnectPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-pulse text-slate-600">Loading...</div>
+      </div>
+    </div>}>
+      <ConnectPageContent />
+    </Suspense>
   )
 }
