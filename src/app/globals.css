@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --safetalk-green: #218314;
+  --safetalk-green-hover: #1b6b11;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --success: #16a34a;
+  --warning: #f59e0b;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'system-ui', sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+@layer components {
+  .container {
+    @apply max-w-6xl mx-auto p-6 md:p-8;
+  }
+
+  .container-narrow {
+    @apply max-w-[560px] mx-auto p-6 md:p-8;
+  }
+
+  .card {
+    @apply rounded-2xl border border-gray-200 bg-white shadow-sm;
+  }
+
+  .btn-primary {
+    @apply bg-safetalk-green text-white hover:bg-safetalk-green-hover disabled:opacity-50 rounded-xl px-6 py-3 font-semibold transition-colors min-h-[44px];
+  }
+
+  .btn-secondary {
+    @apply bg-white border border-gray-300 hover:bg-gray-50 text-slate-700 rounded-xl px-6 py-3 font-semibold transition-colors min-h-[44px];
+  }
+
+  .input-field {
+    @apply rounded-xl border-gray-300 focus:border-safetalk-green focus:ring-safetalk-green focus:ring-1 px-4 py-3 w-full min-h-[44px];
+  }
+
+  .banner {
+    @apply rounded-xl border-l-4 p-4;
+  }
+
+  .banner-info {
+    @apply banner border-l-blue-500 bg-blue-50 text-blue-900;
+  }
+
+  .banner-success {
+    @apply banner border-l-green-500 bg-green-50 text-green-900;
+  }
+
+  .banner-warning {
+    @apply banner border-l-amber-500 bg-amber-50 text-amber-900;
+  }
+
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out;
+  }
+}
