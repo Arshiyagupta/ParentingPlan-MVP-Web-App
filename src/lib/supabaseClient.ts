@@ -3,8 +3,16 @@ import { createBrowserClient } from '@supabase/ssr'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
+// Debug logging
+console.log('Supabase config:', {
+  url: supabaseUrl ? 'present' : 'missing',
+  key: supabaseAnonKey ? 'present' : 'missing',
+  urlLength: supabaseUrl?.length,
+  keyLength: supabaseAnonKey?.length
+})
+
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+  throw new Error(`Missing Supabase environment variables. URL: ${!!supabaseUrl}, Key: ${!!supabaseAnonKey}`)
 }
 
 export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
